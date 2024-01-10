@@ -1,10 +1,22 @@
 import './App.scss';
-import Button from '@mui/material/Button';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from './pages/mainPage/MainPage';
+import ErrorPage from './pages/errorPage/ErrorPage';
+import DetailsPage from './pages/detailsPage/DetailsPage';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainPage />,
+    errorElement: <ErrorPage />,
+  },
+  { path: 'details', element: <DetailsPage /> },
+]);
 
 function App() {
   return (
     <div className="App">
-      <Button variant="contained">Hello world</Button>
+      <RouterProvider router={router} />
     </div>
   );
 }
