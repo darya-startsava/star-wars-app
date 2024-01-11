@@ -19,7 +19,9 @@ export function Filter() {
   return (
     <section>
       <FormControl>
-        <FormLabel id="gender-radio-buttons-group-label">Gender</FormLabel>
+        <FormLabel id="gender-radio-buttons-group-label">
+          Filter by character gender
+        </FormLabel>
         <RadioGroup
           aria-labelledby="gender-radio-buttons-group-label"
           onChange={onGenderFilterValueChange}

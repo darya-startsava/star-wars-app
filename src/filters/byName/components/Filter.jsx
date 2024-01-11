@@ -1,5 +1,6 @@
-import { selectByNameFilterValue, setNameFilter } from '../slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { TextField } from '@mui/material';
+import { selectByNameFilterValue, setNameFilter } from '../slice';
 
 export function Filter() {
   const dispatch = useDispatch();
@@ -10,10 +11,11 @@ export function Filter() {
 
   return (
     <section>
-      <input
-        type="text"
-        onChange={onNameFilterValueChange}
+      <TextField
+        label="Filter by character name"
+        variant="outlined"
         value={byNameFilterValue}
+        onChange={onNameFilterValueChange}
       />
     </section>
   );
