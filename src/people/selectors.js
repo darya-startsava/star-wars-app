@@ -1,19 +1,37 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { starWarsAPI } from '../service';
 import {
   filter as filterByName,
   selectByNameFilterValue,
 } from '../filters/byName/slice';
-import { starWarsAPI } from '../service';
+import {
+  filter as filterByGender,
+  selectByGenderFilterValue,
+} from '../filters/byGender/slice';
 
-export const selectPeople = createSelector(
+const selectPeople = createSelector(
   starWarsAPI.endpoints.getPeople.select(),
   (query) => {
     return query.data?.results ?? [];
   },
 );
 
+const filterByNameCreator = (people) =>
+  createSelector(selectByNameFilterValue, (name) => filterByName(name, people));
+
+const filterByGenderCreator = (people) =>
+  createSelector(selectByGenderFilterValue, (name) =>
+    filterByGender(name, people),
+  );
+
 export const selectFilteredPeople = createSelector(
-  selectByNameFilterValue,
+  (state) => state,
   selectPeople,
-  (name, people) => filterByName(name, people),
+  // Generalized filters composition
+  (state, people) => {
+    return [filterByNameCreator, filterByGenderCreator].reduce(
+      (res, f) => f(res)(state),
+      people,
+    );
+  },
 );

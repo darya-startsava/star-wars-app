@@ -9,10 +9,12 @@ export function Filter() {
   const byNameFilterValue = useSelector(selectByNameFilterValue);
 
   return (
-    <input
-      type="text"
-      onChange={onNameFilterValueChange}
-      value={byNameFilterValue}
-    />
+    <section>
+      <input
+        type="text"
+        onChange={onNameFilterValueChange}
+        value={byNameFilterValue}
+      />
+    </section>
   );
 }
