@@ -1,22 +1,26 @@
 import { useGetPeopleQuery } from '../service';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectFilteredPeople } from './selectors';
+import { Filter as FilterByName } from '../filters/byName/components/Filter';
 
 export default function People() {
-  const { data, error, isLoading } = useGetPeopleQuery();
-  useEffect(() => {
-  }, [data]);
+  const { isLoading } = useGetPeopleQuery();
+  const filteredPeople = useSelector(selectFilteredPeople);
+
   if (isLoading) {
     return 'Loading...';
   }
-  if (data) {
-    return (
+
+  return (
+    <>
+      <FilterByName />
       <ul>
-        {data.results.map(({ url, name }) => (
+        {filteredPeople.map(({ url, name }) => (
           <li key={url}>
             <div>{name}</div>
           </li>
         ))}
       </ul>
-    );
-  }
+    </>
+  );
 }
