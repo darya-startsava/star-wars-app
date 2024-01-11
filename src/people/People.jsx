@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Card,
-  CardActions,
+  CardActionArea,
   CardContent,
   CardHeader,
   Grid,
@@ -14,6 +14,7 @@ import { Filter as FilterByName } from '../filters/byName/components/Filter';
 import { Filter as FilterByGender } from '../filters/byGender/components/Filter';
 import { Filter as FilterByMass } from '../filters/byMass/components/Filter';
 import { resetFilters } from '../filters/actions';
+import { Link } from 'react-router-dom';
 
 export default function People() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export default function People() {
       <FilterByGender />
       <FilterByMass />
       <Button variant="contained" color="primary" onClick={onResetButtonClick}>
-        Reset
+        Reset all filters
       </Button>
       <Grid
         container
@@ -43,17 +44,18 @@ export default function People() {
         {filteredPeople.map(({ url, name, gender, mass, birth_year }) => (
           <Grid key={url} item xs={6} sm={4} md={3}>
             <Card>
-              <CardContent>
-                <CardHeader
-                  title={name}
-                  subheader={`Birth Year: ${birth_year}`}
-                />
-                <Typography>Gender: {gender}</Typography>
-                <Typography>Mass: {mass}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Learn More</Button>
-              </CardActions>
+              <CardActionArea>
+                <Link to={`/details/${url.split('/').at(-2)}`}>
+                  <CardContent>
+                    <CardHeader
+                      title={name}
+                      subheader={`Birth Year: ${birth_year}`}
+                    />
+                    <Typography>Gender: {gender}</Typography>
+                    <Typography>Mass: {mass}</Typography>
+                  </CardContent>
+                </Link>
+              </CardActionArea>
             </Card>
           </Grid>
         ))}

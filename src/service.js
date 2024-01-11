@@ -38,7 +38,17 @@ export const starWarsAPI = createApi({
         );
       },
     }),
+    getPersonById: builder.query({
+      query: (id) => `people/${id}/`,
+    }),
+    getPlanetsById: builder.query({
+      query: (id) => `planets/${id}/`,
+    }),
   }),
 });
 
-export const { useGetPeopleQuery } = starWarsAPI;
+export const {
+  useGetPeopleQuery,
+  useGetPersonByIdQuery,
+  useGetPlanetsByIdQuery,
+} = starWarsAPI;
