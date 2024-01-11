@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { resetFilters } from '../actions';
+
+const initialState = '';
 
 export const byNameSlice = createSlice({
   name: 'name',
-  initialState: '',
+  initialState,
+  extraReducers: (builder) => builder.addCase(resetFilters, () => initialState),
   reducers: {
     setNameFilter: (state, action) => {
       return action.payload;

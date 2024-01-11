@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { resetFilters } from '../actions';
+
+const initialState = { min: '', max: '' };
 
 export const byMassSlice = createSlice({
   name: 'mass',
-  initialState: { min: '', max: '' },
+  initialState,
+  extraReducers: (builder) => builder.addCase(resetFilters, () => initialState),
   reducers: {
     setMassFilterMin: (state, action) => {
       state.min = action.payload;

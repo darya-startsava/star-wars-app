@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Card,
@@ -13,10 +13,15 @@ import { selectFilteredPeople } from './selectors';
 import { Filter as FilterByName } from '../filters/byName/components/Filter';
 import { Filter as FilterByGender } from '../filters/byGender/components/Filter';
 import { Filter as FilterByMass } from '../filters/byMass/components/Filter';
+import { resetFilters } from '../filters/actions';
 
 export default function People() {
+  const dispatch = useDispatch();
   const { isLoading } = useGetPeopleQuery();
   const filteredPeople = useSelector(selectFilteredPeople);
+  function onResetButtonClick() {
+    dispatch(resetFilters());
+  }
 
   if (isLoading) {
     return 'Loading...';
@@ -27,6 +32,9 @@ export default function People() {
       <FilterByName />
       <FilterByGender />
       <FilterByMass />
+      <Button variant="contained" color="primary" onClick={onResetButtonClick}>
+        Reset
+      </Button>
       <Grid
         container
         rowSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -40,12 +48,8 @@ export default function People() {
                   title={name}
                   subheader={`Birth Year: ${birth_year}`}
                 />
-                <Typography>
-                  <ul>
-                    <li>Gender: {gender}</li>
-                    <li>Mass: {mass}</li>
-                  </ul>
-                </Typography>
+                <Typography>Gender: {gender}</Typography>
+                <Typography>Mass: {mass}</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small">Learn More</Button>
