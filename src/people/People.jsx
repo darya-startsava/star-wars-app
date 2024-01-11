@@ -12,6 +12,7 @@ import { useGetPeopleQuery } from '../service';
 import { selectFilteredPeople } from './selectors';
 import { Filter as FilterByName } from '../filters/byName/components/Filter';
 import { Filter as FilterByGender } from '../filters/byGender/components/Filter';
+import { Filter as FilterByMass } from '../filters/byMass/components/Filter';
 
 export default function People() {
   const { isLoading } = useGetPeopleQuery();
@@ -25,6 +26,7 @@ export default function People() {
     <>
       <FilterByName />
       <FilterByGender />
+      <FilterByMass />
       <Grid
         container
         rowSpacing={{ xs: 1, sm: 2, md: 3 }}
