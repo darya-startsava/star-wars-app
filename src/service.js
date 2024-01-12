@@ -44,6 +44,24 @@ export const starWarsAPI = createApi({
     getPlanetsById: builder.query({
       query: (id) => `planets/${id}/`,
     }),
+    getFilmsByIds: builder.query({
+      async queryFn(filmIds, _queryApi, _extraOptions, fetchWithBQ) {
+        const filmPromises = [];
+        filmIds.forEach((id) => filmPromises.push(fetchWithBQ(`films/${id}/`)));
+        const films = await Promise.all(filmPromises);
+        return films.reduce(
+          (response, film) => {
+            if (film.error) {
+              response.error = film.error;
+            } else {
+              response.data.push(film.data);
+            }
+            return response;
+          },
+          { data: [] },
+        );
+      },
+    }),
   }),
 });
 
@@ -51,4 +69,5 @@ export const {
   useGetPeopleQuery,
   useGetPersonByIdQuery,
   useGetPlanetsByIdQuery,
+  useGetFilmsByIdsQuery,
 } = starWarsAPI;

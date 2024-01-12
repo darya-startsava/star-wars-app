@@ -1,11 +1,18 @@
 import './DetailsPage.scss';
-import { useGetPersonByIdQuery, useGetPlanetsByIdQuery } from '../../service';
+import {
+  useGetPersonByIdQuery,
+  useGetPlanetsByIdQuery,
+  useGetFilmsByIdsQuery,
+} from '../../service';
 import { useLocation } from 'react-router-dom';
 
 function DetailsPage() {
   const location = useLocation();
   const id = location.pathname.split('/').at(-1);
   const { data, error, isLoading } = useGetPersonByIdQuery(id);
+  function getFilmsIds() {
+    return data?.films.map((film) => film.split('/').at(-2));
+  }
   const {
     data: planetsData,
     error: planetsError,
@@ -14,6 +21,15 @@ function DetailsPage() {
     skip: !data,
   });
 
+  const {
+    data: filmsData,
+    error: filmsError,
+    isLoading: filmsIsLoading,
+  } = useGetFilmsByIdsQuery(getFilmsIds(), {
+    skip: !data,
+  });
+
+  console.log(filmsData);
   return (
     <div>
       Details Page
@@ -39,6 +55,16 @@ function DetailsPage() {
               <> Loading...</>
             ) : planetsData ? (
               <span> {planetsData.name}</span>
+            ) : null}
+          </p>
+          <p>
+            Films:
+            {filmsError ? (
+              <> An error occured. Try reloading the page.</>
+            ) : filmsIsLoading ? (
+              <> Loading...</>
+            ) : filmsData ? (
+              <span> {filmsData.map((film) => film.title).join(', ')}</span>
             ) : null}
           </p>
         </div>
