@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+} from '@mui/material';
 import { selectByFilmsFilterValue, setFilmsFilter } from '../slice';
 import { useGetFilmsQuery } from '../../../service';
 
@@ -17,6 +22,9 @@ export function Filter() {
 
   return (
     <section>
+      <Typography variant="h6" mb={2}>
+        Filter by film:
+      </Typography>
       <FormGroup>
         {data.results.map(({ url, title }) => {
           const isChecked = byFilmsFilterValue?.includes(url);

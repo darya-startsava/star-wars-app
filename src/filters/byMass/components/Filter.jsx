@@ -6,6 +6,7 @@ import {
   selectByMassFilterValueMin,
   selectByMassFilterValueMax,
 } from '../slice';
+import './Filter.scss';
 
 export function Filter() {
   const dispatch = useDispatch();
@@ -21,7 +22,9 @@ export function Filter() {
   return (
     <section>
       <Box>
-        <Typography variant="h6">Filter by mass range</Typography>
+        <Typography variant="h6" mb={2}>
+          Filter by mass range:
+        </Typography>
         <TextField
           label="Min. mass"
           type="number"
@@ -30,8 +33,12 @@ export function Filter() {
           }}
           value={byMassFilterValueMin}
           onChange={onMassFilterValueMinChange}
+          sx={{
+            width: 100,
+            marginBottom: 1,
+          }}
         />
-        <span>-</span>
+        <span className="range-separator"></span>
         <TextField
           label="Max. mass"
           type="number"
@@ -40,6 +47,10 @@ export function Filter() {
           }}
           value={byMassFilterValueMax}
           onChange={onMassFilterValueMaxChange}
+          sx={{
+            width: 100,
+            marginBottom: 1,
+          }}
         />
       </Box>
     </section>

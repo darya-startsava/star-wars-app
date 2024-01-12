@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
+  Typography,
   Radio,
   RadioGroup,
 } from '@mui/material';
@@ -19,9 +19,9 @@ export function Filter() {
   return (
     <section>
       <FormControl>
-        <FormLabel id="gender-radio-buttons-group-label">
-          Filter by character gender
-        </FormLabel>
+        <Typography variant="h6" mt={2}>
+          Filter by character gender:
+        </Typography>
         <RadioGroup
           aria-labelledby="gender-radio-buttons-group-label"
           onChange={onGenderFilterValueChange}
