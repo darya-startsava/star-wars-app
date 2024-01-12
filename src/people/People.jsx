@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useGetPeopleQuery } from '../service';
+import { useGetFilmsQuery, useGetPeopleQuery } from '../service';
 import { selectFilteredPeople } from './selectors';
 import { Filter as FilterByName } from '../filters/byName/components/Filter';
 import { Filter as FilterByGender } from '../filters/byGender/components/Filter';
@@ -20,9 +20,17 @@ import { resetFilters } from '../filters/actions';
 export default function People() {
   const dispatch = useDispatch();
   const { isLoading } = useGetPeopleQuery();
+  const { isLoading: isFilmsLoading, data: films } = useGetFilmsQuery();
   const filteredPeople = useSelector(selectFilteredPeople);
+
   function onResetButtonClick() {
     dispatch(resetFilters());
+  }
+
+  function getCharacterFilms(character) {
+    return character.films.map(
+      (id) => films.results.find((film) => film.url === id).title,
+    );
   }
 
   if (isLoading) {
@@ -49,24 +57,33 @@ export default function People() {
         rowSpacing={{ xs: 1, sm: 2, md: 3 }}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        {filteredPeople.map(({ url, name, gender, mass, birth_year }) => (
-          <Grid key={url} item xs={6} sm={4} md={3}>
-            <Card>
-              <CardActionArea>
-                <Link to={`/details/${url.split('/').at(-2)}`}>
-                  <CardContent>
-                    <CardHeader
-                      title={name}
-                      subheader={`Birth Year: ${birth_year}`}
-                    />
-                    <Typography>Gender: {gender}</Typography>
-                    <Typography>Mass: {mass}</Typography>
-                  </CardContent>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
+        {filteredPeople.map((character) => {
+          const { url, name, gender, mass, birth_year } = character;
+          const characterFilms = films ? getCharacterFilms(character) : [];
+          return (
+            <Grid key={url} item xs={6} sm={4} md={3}>
+              {/*TODO: extract to separate component*/}
+              <Card>
+                <CardActionArea>
+                  <Link to={`/details/${url.split('/').at(-2)}`}>
+                    <CardContent>
+                      <CardHeader
+                        title={name}
+                        subheader={`Birth Year: ${birth_year}`}
+                      />
+                      <Typography>Gender: {gender}</Typography>
+                      <Typography>Mass: {mass}</Typography>
+                      Films:{' '}
+                      {isFilmsLoading
+                        ? 'Loading...'
+                        : characterFilms.join(', ')}
+                    </CardContent>
+                  </Link>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
     </>
   );
