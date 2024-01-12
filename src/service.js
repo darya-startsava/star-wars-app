@@ -44,6 +44,9 @@ export const starWarsAPI = createApi({
     getPlanetsById: builder.query({
       query: (id) => `planets/${id}/`,
     }),
+    getFilms: builder.query({
+      query: () => 'films/',
+    }),
     getFilmsByIds: builder.query({
       async queryFn(filmIds, _queryApi, _extraOptions, fetchWithBQ) {
         const filmPromises = [];
@@ -69,5 +72,6 @@ export const {
   useGetPeopleQuery,
   useGetPersonByIdQuery,
   useGetPlanetsByIdQuery,
+  useGetFilmsQuery,
   useGetFilmsByIdsQuery,
 } = starWarsAPI;

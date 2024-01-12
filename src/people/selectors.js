@@ -8,12 +8,15 @@ import {
   filter as filterByGender,
   selectByGenderFilterValue,
 } from '../filters/byGender/slice';
-
 import {
   filter as filterByMass,
   selectByMassFilterValueMin,
   selectByMassFilterValueMax,
 } from '../filters/byMass/slice';
+import {
+  filter as filterByFilms,
+  selectByFilmsFilterValue,
+} from '../filters/byFilms/slice';
 
 const selectPeople = createSelector(
   starWarsAPI.endpoints.getPeople.select(),
@@ -37,6 +40,11 @@ const filterByMassCreator = (people) =>
     (min, max) => filterByMass(min, max, people),
   );
 
+const filterByFilmsCreator = (people) =>
+  createSelector(selectByFilmsFilterValue, (gender) =>
+    filterByFilms(gender, people),
+  );
+
 export const selectFilteredPeople = createSelector(
   (state) => state,
   selectPeople,
@@ -46,6 +54,7 @@ export const selectFilteredPeople = createSelector(
       filterByNameCreator,
       filterByGenderCreator,
       filterByMassCreator,
+      filterByFilmsCreator,
     ].reduce((res, f) => f(res)(state), people);
   },
 );

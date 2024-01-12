@@ -8,13 +8,14 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { useGetPeopleQuery } from '../service';
 import { selectFilteredPeople } from './selectors';
 import { Filter as FilterByName } from '../filters/byName/components/Filter';
 import { Filter as FilterByGender } from '../filters/byGender/components/Filter';
 import { Filter as FilterByMass } from '../filters/byMass/components/Filter';
+import { Filter as FilterByFilms } from '../filters/byFilms/components/Filter';
 import { resetFilters } from '../filters/actions';
-import { Link } from 'react-router-dom';
 
 export default function People() {
   const dispatch = useDispatch();
@@ -33,9 +34,16 @@ export default function People() {
       <FilterByName />
       <FilterByGender />
       <FilterByMass />
-      <Button variant="contained" color="primary" onClick={onResetButtonClick}>
-        Reset all filters
-      </Button>
+      <FilterByFilms />
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onResetButtonClick}
+        >
+          Reset
+        </Button>
+      </div>
       <Grid
         container
         rowSpacing={{ xs: 1, sm: 2, md: 3 }}
