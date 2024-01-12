@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardContent,
   CardHeader,
+  CircularProgress,
   Chip,
   Grid,
   Typography,
@@ -25,17 +26,16 @@ export default function People() {
   }
 
   if (isLoading) {
-    return 'Loading...';
+    return (
+      <div className="progress_wrapper">
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (
     <>
-      <Grid
-        container
-        alignItems="stretch"
-        // rowSpacing={{ xs: 1, sm: 2, md: 3 }}
-        // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      >
+      <Grid container alignItems="stretch" justifyContent="center">
         {filteredPeople.map((character) => {
           const { url, name, gender, mass, birth_year } = character;
           const characterFilms = films ? getCharacterFilms(character) : [];
@@ -63,11 +63,13 @@ export default function People() {
                   <Typography>Gender: {gender}</Typography>
                   <Typography>Mass: {mass}</Typography>
                   <Typography>Films:</Typography>
-                  {isFilmsLoading
-                    ? 'Loading...'
-                    : characterFilms.map((film) => (
-                        <Chip key={film} size="small" label={film} />
-                      ))}
+                  {isFilmsLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    characterFilms.map((film) => (
+                      <Chip key={film} size="small" label={film} />
+                    ))
+                  )}
                 </CardContent>
               </CardActionArea>
             </Grid>

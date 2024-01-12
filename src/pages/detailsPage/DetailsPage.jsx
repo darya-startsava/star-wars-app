@@ -8,7 +8,13 @@ import {
   useGetStarshipsByIdsQuery,
 } from '../../service';
 import { useLocation } from 'react-router-dom';
-import { Box, Container, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Divider,
+  Typography,
+} from '@mui/material';
 
 function DetailsPage() {
   const location = useLocation();
@@ -70,7 +76,9 @@ function DetailsPage() {
       {error ? (
         <> An error occured. Try reloading the page.</>
       ) : isLoading ? (
-        <> Loading...</>
+        <div className="progress_wrapper">
+          <CircularProgress />
+        </div>
       ) : data ? (
         <Box>
           <Typography variant="h3" className="detailes_name">
@@ -89,7 +97,7 @@ function DetailsPage() {
             {planetsError ? (
               <> An error occured. Try reloading the page.</>
             ) : planetsIsLoading ? (
-              <> Loading...</>
+              <CircularProgress />
             ) : planetsData ? (
               <span> {planetsData.name}</span>
             ) : null}
@@ -99,7 +107,7 @@ function DetailsPage() {
             {filmsError ? (
               <> An error occured. Try reloading the page.</>
             ) : filmsIsLoading ? (
-              <> Loading...</>
+              <CircularProgress />
             ) : filmsData ? (
               <span> {filmsData.map((film) => film.title).join(', ')}</span>
             ) : null}
@@ -109,7 +117,7 @@ function DetailsPage() {
             {speciesError ? (
               <> An error occured. Try reloading the page.</>
             ) : speciesIsLoading ? (
-              <> Loading...</>
+              <CircularProgress />
             ) : speciesData ? (
               <span> {speciesData.map((item) => item.name).join(', ')}</span>
             ) : null}
@@ -119,7 +127,7 @@ function DetailsPage() {
             {vehiclesError ? (
               <> An error occured. Try reloading the page.</>
             ) : vehiclesIsLoading ? (
-              <> Loading...</>
+              <CircularProgress />
             ) : vehiclesData ? (
               <span> {vehiclesData.map((item) => item.name).join(', ')}</span>
             ) : null}
@@ -129,7 +137,7 @@ function DetailsPage() {
             {starshipsError ? (
               <> An error occured. Try reloading the page.</>
             ) : starshipsIsLoading ? (
-              <> Loading...</>
+              <CircularProgress />
             ) : starshipsData ? (
               <span> {starshipsData.map((item) => item.name).join(', ')}</span>
             ) : null}

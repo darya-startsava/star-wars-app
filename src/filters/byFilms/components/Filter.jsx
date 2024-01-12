@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  CircularProgress,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -17,7 +18,7 @@ export function Filter() {
   const byFilmsFilterValue = useSelector(selectByFilmsFilterValue);
 
   if (isLoading) {
-    return 'Loading...';
+    return <CircularProgress />;
   }
 
   return (
