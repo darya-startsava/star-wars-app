@@ -10,10 +10,17 @@ import './Filter.scss';
 
 export function Filter() {
   const dispatch = useDispatch();
+
   function onMassFilterValueMinChange(e) {
+    if (event.target.value < 0) {
+      event.target.value = 0;
+    }
     dispatch(setMassFilterMin(e.target.value));
   }
   function onMassFilterValueMaxChange(e) {
+    if (event.target.value < 0) {
+      event.target.value = 0;
+    }
     dispatch(setMassFilterMax(e.target.value));
   }
   const byMassFilterValueMin = useSelector(selectByMassFilterValueMin);
