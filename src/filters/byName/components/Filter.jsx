@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { selectByNameFilterValue, setNameFilter } from '../slice';
 
 export function Filter() {
@@ -11,8 +11,11 @@ export function Filter() {
 
   return (
     <section>
+      <Typography variant="h6" mb={2}>
+        Filter by character name:
+      </Typography>
       <TextField
-        label="Filter by character name"
+        label="Name"
         variant="outlined"
         value={byNameFilterValue}
         onChange={onNameFilterValueChange}

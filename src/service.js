@@ -65,6 +65,66 @@ export const starWarsAPI = createApi({
         );
       },
     }),
+    getSpeciesByIds: builder.query({
+      async queryFn(speciesIds, _queryApi, _extraOptions, fetchWithBQ) {
+        const speciesPromises = [];
+        speciesIds.forEach((id) =>
+          speciesPromises.push(fetchWithBQ(`species/${id}/`)),
+        );
+        const species = await Promise.all(speciesPromises);
+        return species.reduce(
+          (response, item) => {
+            if (item.error) {
+              response.error = item.error;
+            } else {
+              response.data.push(item.data);
+            }
+            return response;
+          },
+          { data: [] },
+        );
+      },
+    }),
+    getVehiclesByIds: builder.query({
+      async queryFn(vehiclesIds, _queryApi, _extraOptions, fetchWithBQ) {
+        const vehiclesPromises = [];
+        vehiclesIds.forEach((id) =>
+          vehiclesPromises.push(fetchWithBQ(`vehicles/${id}/`)),
+        );
+        const vehicles = await Promise.all(vehiclesPromises);
+        return vehicles.reduce(
+          (response, item) => {
+            if (item.error) {
+              response.error = item.error;
+            } else {
+              response.data.push(item.data);
+            }
+            return response;
+          },
+          { data: [] },
+        );
+      },
+    }),
+    getStarshipsByIds: builder.query({
+      async queryFn(starshipsIds, _queryApi, _extraOptions, fetchWithBQ) {
+        const starshipsPromises = [];
+        starshipsIds.forEach((id) =>
+          starshipsPromises.push(fetchWithBQ(`starships/${id}/`)),
+        );
+        const starships = await Promise.all(starshipsPromises);
+        return starships.reduce(
+          (response, item) => {
+            if (item.error) {
+              response.error = item.error;
+            } else {
+              response.data.push(item.data);
+            }
+            return response;
+          },
+          { data: [] },
+        );
+      },
+    }),
   }),
 });
 
@@ -74,4 +134,7 @@ export const {
   useGetPlanetsByIdQuery,
   useGetFilmsQuery,
   useGetFilmsByIdsQuery,
+  useGetSpeciesByIdsQuery,
+  useGetVehiclesByIdsQuery,
+  useGetStarshipsByIdsQuery,
 } = starWarsAPI;
