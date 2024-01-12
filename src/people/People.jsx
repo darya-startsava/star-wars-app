@@ -48,7 +48,7 @@ export default function People() {
               md={3}
               component={Card}
               sx={{ margin: 1 }}
-              className="person-card"
+              style={{ backgroundColor: '#e3f2fd' }}
             >
               {/*TODO: extract to separate component*/}
               <CardActionArea
