@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardContent,
   CardHeader,
+  Chip,
   Grid,
   Typography,
 } from '@mui/material';
@@ -64,21 +65,24 @@ export default function People() {
             <Grid key={url} item xs={6} sm={4} md={3}>
               {/*TODO: extract to separate component*/}
               <Card>
-                <CardActionArea>
-                  <Link to={`/details/${url.split('/').at(-2)}`}>
-                    <CardContent>
-                      <CardHeader
-                        title={name}
-                        subheader={`Birth Year: ${birth_year}`}
-                      />
-                      <Typography>Gender: {gender}</Typography>
-                      <Typography>Mass: {mass}</Typography>
-                      Films:{' '}
-                      {isFilmsLoading
-                        ? 'Loading...'
-                        : characterFilms.join(', ')}
-                    </CardContent>
-                  </Link>
+                <CardActionArea
+                  component={Link}
+                  to={`/details/${url.split('/').at(-2)}`}
+                >
+                  <CardContent>
+                    <CardHeader
+                      title={name}
+                      subheader={`Birth Year: ${birth_year}`}
+                    />
+                    <Typography>Gender: {gender}</Typography>
+                    <Typography>Mass: {mass}</Typography>
+                    <Typography>Films:</Typography>
+                    {isFilmsLoading
+                      ? 'Loading...'
+                      : characterFilms.map((film) => (
+                          <Chip key={film} size="small" label={film} />
+                        ))}
+                  </CardContent>
                 </CardActionArea>
               </Card>
             </Grid>
